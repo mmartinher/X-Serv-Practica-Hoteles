@@ -1,0 +1,58 @@
+{% extends "index_base.html" %}
+
+{% block content %}
+<div class="content">
+	<h1> {{hotel.nombre}} </h1>
+	{% if user.is_authenticated %}
+		<form action="/addfavorito/" method="Post">
+		{% csrf_token %}
+			<input name="identificador" type="hidden" value="{{hotel.id}}"></input>
+			<input type="submit" value="Añadir a favoritos" />
+		</form>
+	{% endif %}
+	{% if user.is_authenticated %}
+		<form action="" method="Post">
+		{% csrf_token %}
+			<select name="idioma">
+				<option value="Spanish">Español</option>
+				<option value="English">English</option>
+				<option value="French">Français</option>
+			</select>
+			<input type="submit" value="Enviar"/>
+		</form>
+	{% endif %}
+
+	<p> <strong>Direccion:</strong> Calle {{hotel.direccion}} </p>
+	<p> <strong>Descripcion:</strong> </p>
+	<p> {{hotel.descripcion}} </p>
+	<p> <strong>Categoria y estrellas:</strong> </p>
+	<p> {{hotel.categoria}}, {{hotel.estrellas}} </p>
+	<a href="{{hotel.pagina}}"> <strong class="link">Página externa</strong></a><br/>
+	<p>
+		<strong>Ubicación: latitud: {{hotel.latitud}} ; longitud: {{hotel.longitud}}</strong>
+	</p>
+	<h4 class="center"><strong> Imagenes:</strong></h4>
+	{% for imagen in imagenes %}
+		<img src="{{imagen}}" alt="" />
+	{% endfor %}
+
+	<br/><br/>
+	<hr/>
+	<h3><strong>Comentarios</strong></h3>
+	{% for comentario in comentarios %}
+	<p> <strong>{{comentario.titulo}}</strong> - {{comentario.user.username}} - {{comentario.fecha}}</p>
+	<p> {{comentario.comentario}} </p>
+	<hr>
+	{% endfor %}
+	{% if user.is_authenticated %}
+		<h3><strong>Deja un comentario:</strong></h4>
+		<form action="/addcomentario/" method="Post">
+			{% csrf_token %}
+				<input name="titulo" type="text" value="Titulo" autocomplete="off"></input>
+				<textarea rows="3" cols="80" name="comentario" type="text"> Escribe aqui... </textarea>
+				<input name="identificador" type="hidden" value="{{hotel.id}}"></input>
+				<input class="submitbutton" type="submit" value="Enviar"/>
+		</form>
+	{% endif %}
+</div>
+{% endblock %}

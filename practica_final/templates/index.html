@@ -1,0 +1,30 @@
+{% extends "index_base.html" %}
+
+{% block content %}
+<div class="content">
+	<br/>
+	<h1>10 hoteles con mas comentarios</h1>
+	<ul>
+		{% for hotel, imagen in hoteles %}
+			<li>
+				<a href="/alojamientos/{{hotel.id}}">{{hotel.nombre}}</a>
+				<p><strong>Direccion: </strong> Calle {{hotel.direccion}}</p>
+				<img src="{{imagen}}" alt="no se pudo mostrar la imagen"><br/>
+				<a href="{{hotel.pagina}}">Mas informacion</a>
+			</li>
+			<br/>
+		{% empty %}
+			<p> No hay hoteles comentados </p>
+		{% endfor %}
+	</ul>
+</div>
+
+<div id="sidebar_container">
+	<div class="sidebar">
+		<h2> Paginas de usuario </h2>
+		{% for user, config in users %}
+			<a href="/_{{user.username}}"><strong class="link">{{config}}</strong></a>&nbsp; - &nbsp;{{user.username}}<br/>
+		{% endfor %}
+	</div>
+</div>
+{% endblock %}

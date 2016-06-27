@@ -1,0 +1,52 @@
+{% extends "index_base.html" %}
+
+{% block content %}
+<div class="content">
+	<br/>
+	{% for hotel, img, fecha in favoritos %}
+		<li>
+			<a href="{{hotel.pagina}}"><strong> {{hotel.nombre}} </strong></a><br/>
+			<strong>Añadido: </strong>{{fecha}}
+			<p><strong> Direccion : </strong>Calle {{hotel.direccion}} </p>
+			<img src="{{img}}" alt=""><br/>
+			<a href="/alojamientos/{{hotel.id}}"><strong> Mas informacion </strong></a>
+		</li><br/><hr/>
+	{% empty %}
+		<p>No tienes favoritos</p>
+	{% endfor %}
+</div>
+
+<div id="sidebar_container">
+	<div class="sidebar">
+		{% if user.is_authenticated %}
+			{% if nick == user.username %}
+				<h2> Personaliza tu pagina! </h2>
+				<form action="" method="Post">
+					{% csrf_token %}
+					<select name="color">
+						<option value="white">Default</option>
+						<option value="black">Black</option>
+						<option value="aqua">Aqua</option>
+						<option value="blue">Blue</option>
+						<option value="gold">Gold</option>
+						<option value="red">Red</option>
+						<option value="green">Green</option>
+						<option value="orange">Orange</option>
+						<option value="beige">Beige</option>
+						<option value="pink">Pink</option>
+					</select>
+					<select name="medida">
+						<option value="14">Default</option>
+						<option value="10">10px</option>
+						<option value="15">15px</option>
+						<option value="20">20px</option>
+						<option value="25">25px</option>
+					</select>
+					<input name="titulo" type="text" value=" "></input>
+					<input type="submit" value="Send" />
+				</form>
+			{% endif %}
+		{% endif %}
+	</div>
+</div>
+{% endblock %}

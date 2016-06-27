@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<alojamientos>
+	<title>
+		Canal XML de {{user.username}}
+	</title>
+	{% for hotel, imagen, fecha in hoteles %}
+		<hotel>
+			<added>{{fecha}}</added>
+			<name>{{hotel.nombre}}</name>
+			<address>{{hotel.direccion}}</address>
+			<web>{{hotel.pagina}}</web>
+			<description>{{hotel.descripcion}}</description>
+			<geoData>
+				<latitude>{{hotel.latitud}}</latitude>
+				<longitude>{{hotel.longitud}}</longitude>
+			</geoData>
+			<multimedia>
+				<url>{{imagen}}</url>
+			</multimedia>
+		</hotel>
+	{% endfor %}
+</alojamientos>

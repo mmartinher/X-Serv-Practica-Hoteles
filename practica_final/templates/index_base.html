@@ -1,0 +1,74 @@
+{% load staticfiles %}
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <title>Hotel Finder</title>
+  <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.ico' %}"/>
+  <meta name="description" content="website description" />
+  <meta name="keywords" content="website keywords, website keywords" />
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <!-- modernizr enables HTML5 elements and feature detects -->
+  <script type="text/javascript" src="/js/modernizr-1.5.min.js"></script>
+</head>
+
+<body>
+  <div id="main">
+    <header>
+      <div id="logo">
+        <div id="logo_text">
+          <!-- class="logo_colour", allows you to change the colour of the text -->
+            <h1><a href="/">Hotel<span class="logo_colour"> finder</span></a></h1>
+            <h2>Simple. Descubre.</h2>
+        </div>
+        <div id="login">
+          {% if user.is_authenticated %}
+            <h4>Bienvenido/a {{user.username}}</h4>
+            <a href="/_{{user.username}}">Mi Pagina</a>
+            <a href="/{{user.username}}/xml">XML</a>
+            <a href="/logout/">Logout</a>
+          {% else %}
+            <form action="/login/" method="Post">
+            {% csrf_token %}
+              <label for="username">Name</label>
+              <input name="username" type="text" value="" class="resize" autocomplete="off"/>
+              <label for="username">Password</label>
+              <input name="password" type="password" value="" class="resize"/>
+              <input type="submit" value="Login"/>
+              </form>
+          {% endif %}
+          </div>
+      </div>
+      <nav>
+        <div id="menu_container">
+          <ul class="sf-menu" id="nav">
+            {% if request.path != '/' %}
+          		<li><a href="/">Principal</a></li>
+          	{% endif %}
+          	<li><a href="/alojamientos">Todos</a></li>
+          	<li><a href="/about">About</a></li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <div id="site_content">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <footer>
+      <p>Copyright &copy; CSS3_colour6 | <a href="http://www.css3templates.co.uk">design from css3templates.co.uk</a></p>
+    </footer>
+  </div>
+  <p>&nbsp;</p>
+  <!-- javascript at the bottom for fast page loading -->
+  <script type="text/javascript" src="js/jquery.js"></script>
+  <script type="text/javascript" src="js/jquery.easing-sooper.js"></script>
+  <script type="text/javascript" src="js/jquery.sooperfish.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('ul.sf-menu').sooperfish();
+    });
+  </script>
+</body>
+</html>
